@@ -1,0 +1,39 @@
+.info {
+  align-items: start;
+  /* padding-left: 1rem; */
+}
+.info__container {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  height: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  padding-inline: 3rem;
+}
+
+.info__title {
+  font-family: "Playfair Display SC", serif;
+  font-size: 5rem;
+  font-weight: 400;
+  width: 50%;
+  padding: 2.5rem;
+  line-height: 4.5rem;
+  /* text-align: center; */
+}
+
+.info__description {
+  /* width: 50%; */
+  text-align: justify;
+  padding-inline: 2rem;
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .info__title {
+    font-size: 3.5rem;
+  }
+  .info__container {
+    width: 60%;
+  }
+}

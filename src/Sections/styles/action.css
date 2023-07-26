@@ -1,0 +1,44 @@
+.action {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 1rem;
+}
+.action__container {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  height: 100vh;
+  /* padding-inline: 5rem; */
+  justify-content: center;
+  align-items: center;
+}
+.action__title {
+  font-family: "Playfair Display SC", serif;
+  font-size: 5rem;
+  font-weight: 400;
+  width: 100%;
+  line-height: 4.5rem;
+  padding: 2rem 0;
+}
+
+.action__description {
+  width: 70%;
+  text-align: justify;
+  /* padding-inline: 2rem; */
+}
+
+.action__buttons {
+  padding: 2rem;
+  width: max-content;
+}
+
+@media screen and (max-width: 1200px) {
+  .action__title {
+    font-size: 3.5rem;
+  }
+
+  .action__description {
+    width: 100%;
+  }
+}

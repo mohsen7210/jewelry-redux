@@ -1,0 +1,81 @@
+.costumizer__container {
+  height: 100px;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+  padding: 1rem;
+}
+
+.costumizer__options {
+  width: 100%;
+  height: 200px;
+  /* background: #00000028; */
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* justify-content: center; */
+}
+
+.costumizer__nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem;
+  /* background: #ffaa22; */
+  z-index: 2;
+}
+
+.costumizer__menu {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.costumizer__details {
+  padding-bottom: 2rem;
+}
+
+.costumizer__details > ul {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.details__btns {
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.costumizer__menu > button {
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.details__image {
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+}
+
+.scroll {
+  height: 200vh;
+}
+
+@media screen and (max-width: 900px) {
+  .costumizer__menu {
+    gap: 2rem;
+  }
+}
