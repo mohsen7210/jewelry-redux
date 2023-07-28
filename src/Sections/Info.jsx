@@ -25,13 +25,13 @@ const Info = () => {
       <AmimatedSection
         transform={"translateX(300px)"}
         className="info__container"
-        variants={cardVariants}
+        // variants={cardVariants}
         margin="-300px 0px 0px 0px"
       >
-        <h1 className="info__title">YOUR TITLE</h1>
+        <h1 className="info__title">Our Collections</h1>
         <p className="info__description">
-          Quod possimus quibusdam itaque blanditiis debitis commodi, numquam in
-          doloribus mollitia impedit!
+          Discover the jewelry collections that feature Kilanche's most iconic
+          designst!
         </p>
       </AmimatedSection>
     </section>

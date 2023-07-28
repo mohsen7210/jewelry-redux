@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./styles/costumizer.css";
-import { PiCircleNotch } from "react-icons/pi";
+import { PiCircleNotch, PiDownloadSimpleBold } from "react-icons/pi";
 import { BsGem } from "react-icons/bs";
 import { GiDiamondRing } from "react-icons/gi";
 import { LuRotate3D } from "react-icons/lu";
@@ -8,7 +8,7 @@ import Details from "../Components/Details";
 import useStore from "../stores/useStore";
 import { Link } from "react-router-dom";
 
-const Costumizer = () => {
+const Costumizer = ({ href }) => {
   const handleRotation = useStore((state) => state.handleRotation);
   const [active, setActive] = useState("");
 
@@ -18,6 +18,13 @@ const Costumizer = () => {
     // handleRotation(false);
     setActive(name);
     setCamPos(r, phi, teta);
+  };
+
+  const handleScreenShot = () => {
+    const link = document.createElement("a");
+    link.setAttribute("download", "canvas.png");
+    link.setAttribute("href", href());
+    link.click();
   };
 
   return (
@@ -54,8 +61,8 @@ const Costumizer = () => {
             >
               <GiDiamondRing color="white" />
             </button>
-            <button>
-              <LuRotate3D color="white" />
+            <button onClick={handleScreenShot}>
+              <PiDownloadSimpleBold color="white" />
             </button>
           </div>
           <div className="costumizer__details">

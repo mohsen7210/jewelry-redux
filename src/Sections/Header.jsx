@@ -16,10 +16,10 @@ const Header = () => {
         transform="translateX(100px)"
         className="header__container"
       >
-        <h1 className="header__title">Find Best For Whome You Love</h1>
+        <h1 className="header__title">Here's to Being Fashionably You</h1>
         <p className="text1 header__describtion">
-          Amet porro beatae iusto laudantium tenetur assumenda, illo voluptates
-          nobis vitae! Reiciendis ad suscipit facilis quisquam
+          Take your outfit to the next level with bold details. We only make
+          100% original jewelry that impresses anyone.
         </p>
         <motion.div whileHover={{ scale: 1.1 }} className="header__buttons">
           <a className="primary__button" href="#action">

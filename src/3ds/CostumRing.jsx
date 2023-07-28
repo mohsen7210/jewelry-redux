@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, Suspense } from "react";
 import Costumizer from "../Pages/Costumizer";
 import ThreeGem from "./ThreeGem";
 import { OpenRing } from "./OpenRing";
@@ -7,9 +7,12 @@ import "../Pages/styles/costumizer.css";
 
 import { Canvas } from "@react-three/fiber";
 import useStore from "../stores/useStore";
+import Loading from "../Components/Loading";
+import PlaceHolder from "./PlaceHolder";
 
 const CostumRing = () => {
   const [action, setAction] = useState("ring1");
+  const canvasRef = useRef();
 
   const handleRotation = useStore((state) => state.handleRotation);
 
@@ -35,13 +38,18 @@ const CostumRing = () => {
     };
   }, []);
 
-  console.log(action);
+  const generateImg = () => {
+    return canvasRef.current
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+  };
 
   return (
     <div className="scroll">
-      <Costumizer />
+      <Costumizer href={generateImg} />
       <div className="video__container">
         <Canvas
+          ref={canvasRef}
           onPointerDownCapture={() => {
             handleRotation(true);
           }}
@@ -53,9 +61,12 @@ const CostumRing = () => {
           }}
           gl={{
             toneMapping: THREE.NoToneMapping,
+            preserveDrawingBuffer: true,
           }}
         >
-          {action == "ring1" ? <ThreeGem /> : <OpenRing />}
+          <Suspense fallback={<PlaceHolder />}>
+            {action == "ring1" ? <ThreeGem /> : <OpenRing />}
+          </Suspense>
         </Canvas>
       </div>
     </div>

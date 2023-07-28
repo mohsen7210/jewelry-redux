@@ -40,3 +40,83 @@ nav {
 .nav__links a:visited {
   color: white;
 }
+
+@media screen and (max-width: 700px) {
+  .nav__menue--open {
+    height: 40px;
+    width: 40px;
+    position: relative;
+    transform: scale(0.9);
+    z-index: 99;
+    /* background: #000; */
+  }
+
+  .nav__menue--open > div {
+    width: 30px;
+    height: 2px;
+    background-color: white;
+    position: absolute;
+    transition: all 0.5s ease;
+    z-index: 99;
+  }
+
+  .nav__menu-top {
+    top: 8px;
+  }
+  .nav__menu-midlle {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .nav__menu-bottom {
+    bottom: 8px;
+  }
+
+  .nav__menue--close div:nth-child(1) {
+    top: 19px;
+    background-color: #ffaadd;
+
+    transform: rotateZ(45deg);
+  }
+  .nav__menue--close div:nth-child(2) {
+    background-color: transparent;
+  }
+  .nav__menue--close div:nth-child(3) {
+    bottom: 19px;
+    background-color: #ffaadd;
+    transform: rotateZ(-45deg);
+  }
+
+  .nav__links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100vw;
+    z-index: 90;
+    transform: translateX(700px);
+    transition: all 0.5s ease;
+  }
+
+  .nav__links-inView {
+    transform: translateX(0);
+  }
+
+  .nav__links > ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.466);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    /* margin-top: 50%; */
+    /* transform: translateY(-50%); */
+
+    height: 100%;
+    z-index: 90;
+  }
+  /* .nav__links a:visited {
+    color: black;
+    font-weight: bold;
+  } */
+}

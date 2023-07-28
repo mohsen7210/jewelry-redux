@@ -11,6 +11,14 @@ export default create(
       activeRing: "ring1",
       rotate: false,
       distance: [6, 4],
+      loading: true,
+      setLoading: (data) => {
+        set((state) => {
+          return {
+            loading: data,
+          };
+        });
+      },
       moveCamera: (r, phi, teta) => {
         set((state) => {
           return {

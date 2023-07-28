@@ -1,33 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
-import vid from "../assets/headSet.webm";
-import { useScroll, motion, useTransform } from "framer-motion";
-
-const VideoBg = () => {
-  const vidRef = useRef();
-
-  const { scrollYProgress } = useScroll();
-  const [timer, setTimer] = useState(0);
-  const vidTime = useTransform(scrollYProgress, [0, 1], [0, 0.5]);
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      // setTimer(vidTime.get());
-      vidRef.current.currentTime = vidTime.get();
-    });
-
-    return () => {
-      window.removeEventListener("scroll", () => {
-        setTimer(vidTime.get());
-      });
-    };
-  }, []);
-
+import React from "react";
+import "./styles/about.css";
+const About = () => {
   return (
-    <div className="video__container">
-      <motion.video ref={vidRef} playsinline loop={false} autoPlay={true} muted>
-        <source src={vid} />
-      </motion.video>
-    </div>
+    <section className="about">
+      <div className="about__container">
+        <h1 className="about__title">About This Project</h1>
+        <p className="about__description">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi
+          architecto labore veritatis corporis facilis delectus quisquam
+          recusandae molestiae eos ea quidem eligendi unde itaque provident
+          tenetur ex, aliquam illo id.
+        </p>
+      </div>
+    </section>
   );
 };
 
-export default VideoBg;
+export default About;

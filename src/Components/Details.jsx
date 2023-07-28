@@ -51,7 +51,12 @@ const Details = ({ active }) => {
           </button>
         </li>
         <li>
-          <button onClick={() => changeRingColor(1, 0.655, 0.425)}>
+          <button onClick={() => changeRingColor(1, 0.6117, 0.839)}>
+            <img className="details__image" src={ros_gold} />
+          </button>
+        </li>
+        <li>
+          <button onClick={() => changeRingColor(0.717, 0.43137, 0.474)}>
             <img className="details__image" src={ros_gold} />
           </button>
         </li>

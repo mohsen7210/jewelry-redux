@@ -17,6 +17,7 @@ import Loading from "../Components/Loading";
 
 import testvertSnader from "../shaders/vertex.glsl";
 import testFrag from "../shaders/frgment.glsl";
+import PlaceHolder from "./PlaceHolder";
 
 const Model = () => {
   const { scrollYProgress } = useScroll();
@@ -162,9 +163,9 @@ export const Ring = () => {
           fov: 45,
         }}
       >
-        {/* <Suspense fallback={<Loading />}> */}
-        <Model />
-        {/* </Suspense> */}
+        <Suspense fallback={<PlaceHolder />}>
+          <Model />
+        </Suspense>
       </Canvas>
     </div>
   );

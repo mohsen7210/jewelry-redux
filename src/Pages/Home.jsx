@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Info from "../Sections/Info";
 import Action from "../Sections/Action";
 import Header from "../Sections/Header";
-import NavBar from "../Sections/NavBar";
 import { Ring } from "../3ds/Ring";
 import useStore from "../stores/useStore";
 import Loading from "../Components/Loading";
@@ -28,7 +27,6 @@ const Home = () => {
 
   return (
     <main>
-      <NavBar />
       <Ring />
       <Header />
       {windoSize.innerWidth < 900 ? <section /> : null}
