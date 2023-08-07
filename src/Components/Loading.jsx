@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useStore from "../stores/useStore";
+import logo from "../assets/logo.webm";
 
 const Loading = () => {
   const [isLoading, setIsLoading] = useState(
@@ -19,8 +20,18 @@ const Loading = () => {
   return (
     <>
       <div className={isLoading ? "loading" : "loading__hide"}>
-        <div className="circle"></div>
-      </div>{" "}
+        <video
+          className="service__video"
+          playsinline
+          loop={true}
+          autoPlay={true}
+          muted
+        >
+          <source src={logo} />
+        </video>
+
+        <h3>Loading ...</h3>
+      </div>
     </>
   );
 };

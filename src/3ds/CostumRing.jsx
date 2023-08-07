@@ -7,8 +7,8 @@ import "../Pages/styles/costumizer.css";
 
 import { Canvas } from "@react-three/fiber";
 import useStore from "../stores/useStore";
-import Loading from "../Components/Loading";
 import PlaceHolder from "./PlaceHolder";
+import BigRing from "./BigRing";
 
 const CostumRing = () => {
   const [action, setAction] = useState("ring1");
@@ -65,7 +65,13 @@ const CostumRing = () => {
           }}
         >
           <Suspense fallback={<PlaceHolder />}>
-            {action == "ring1" ? <ThreeGem /> : <OpenRing />}
+            {action == "ring1" ? (
+              <ThreeGem />
+            ) : action == "ring2" ? (
+              <OpenRing />
+            ) : (
+              <BigRing />
+            )}
           </Suspense>
         </Canvas>
       </div>

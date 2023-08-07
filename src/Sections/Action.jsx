@@ -37,8 +37,7 @@ const Action = () => {
         <h1 className="action__title">Colorful Gems</h1>
 
         <p className="action__description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-          consequuntur accusamus
+          You can try many combinations and find out which one fits your style.
         </p>
 
         <motion.div whileHover={{ scale: 1.1 }} className="action__buttons">

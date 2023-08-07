@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/costumizer.css";
 import { PiCircleNotch, PiDownloadSimpleBold } from "react-icons/pi";
 import { BsGem } from "react-icons/bs";
 import { GiDiamondRing } from "react-icons/gi";
-import { LuRotate3D } from "react-icons/lu";
 import Details from "../Components/Details";
 import useStore from "../stores/useStore";
 import { Link } from "react-router-dom";
+import Loading from "../Components/Loading";
 
 const Costumizer = ({ href }) => {
   const handleRotation = useStore((state) => state.handleRotation);
   const [active, setActive] = useState("");
 
   const setCamPos = useStore((state) => state.moveCamera);
+  const [isLoading, setIsLoading] = useState(
+    useStore((state) => state.loading)
+  );
 
   const handleOptions = (name, r, phi, teta) => {
-    // handleRotation(false);
     setActive(name);
     setCamPos(r, phi, teta);
   };
@@ -27,8 +29,20 @@ const Costumizer = ({ href }) => {
     link.click();
   };
 
+  useEffect(() => {
+    const unsubscribe = useStore.subscribe(
+      (state) => state.loading,
+      (vlaue) => setIsLoading(vlaue)
+    );
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <>
+      <Loading />
       <div className="costumizer__nav">
         <Link className="primary__button " to="/#action">
           Exit

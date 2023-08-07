@@ -24,7 +24,7 @@ const NavBar = () => {
             </video>
           </Link>
           <div className="nav__logo__text">
-            <p className="logo">Jewelry</p>
+            <p className="logo">Kilanche</p>
           </div>
         </div>
 
@@ -42,13 +42,13 @@ const NavBar = () => {
         <div className={isOpen ? "nav__links nav__links-inView" : "nav__links"}>
           <ul onClick={() => setIsOpen(false)}>
             <li onClick={() => setIsOpen(false)}>
-              <a href="#56"> Contact</a>
+              <Link to="/"> Home</Link>
             </li>
             <li onClick={() => setIsOpen(false)}>
               <Link to="/about"> About</Link>
             </li>
             <li onClick={() => setIsOpen(false)}>
-              <a href="#56">Costumize</a>
+              <Link to="/costumize"> Costumize</Link>
             </li>
           </ul>
         </div>

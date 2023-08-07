@@ -71,11 +71,18 @@
 }
 
 .scroll {
-  height: 200vh;
+  /* height: 200vh; */
+  position: relative;
 }
 
 @media screen and (max-width: 900px) {
   .costumizer__menu {
     gap: 2rem;
+  }
+
+  .costumizer__details > ul {
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
   }
 }

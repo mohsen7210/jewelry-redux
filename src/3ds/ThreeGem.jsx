@@ -8,14 +8,7 @@ import {
   MeshRefractionMaterial,
   OrbitControls,
 } from "@react-three/drei";
-import {
-  useTime,
-  useTransform,
-  useMotionValue,
-  animate,
-  useScroll,
-} from "framer-motion";
-import { degreesToRadians } from "popmotion";
+
 import { RGBELoader } from "three-stdlib";
 import useStore from "../stores/useStore";
 
@@ -35,9 +28,6 @@ const ThreeGem = () => {
   const [rotate, setRotate] = useState(useStore((state) => state.rotate));
 
   useEffect(() => {
-    // if (action) {
-    //   const animation = animate(posx, 1, { duration: 1.5 });
-    // }
     const unsubscribeRing = useStore.subscribe(
       (state) => state.ringColor,
       (color) => {
@@ -71,42 +61,12 @@ const ThreeGem = () => {
       camPos.copy(state.camera.position);
       smoothedPos.copy(state.camera.position);
       state.camera.lookAt(0, 0, 0);
-
-      // cubeRef.current.rotation.set(
-      //   cubeRef.current.rotation.x,
-      //   cubeRef.current.rotation.y,
-      //   cubeRef.current.rotation.z + delta * 0.1
-      // );
     } else {
       smoothedPos.lerp(camPos, 5 * delta);
       state.camera.position.copy(smoothedPos);
       state.camera.lookAt(0, 0, 0);
     }
-
-    // camPos.copy(orbitRef.current.object.position);
   });
-
-  // useFrame(({ camera }, delta) => {
-  //   if (!rotate) {
-  //     camera.position.setFromSphericalCoords(
-  //       distance.get(),
-  //       yAngle.get(),
-  //       cupos.get()
-  //     );
-  //     camera.updateProjectionMatrix();
-  //     camera.lookAt(0, 0, 0);
-  //     // cubeRef.current.position.set(cupos.get(), 0, 0);
-  //   } else {
-  //     // cubeRef.current.position.set(0, 0, 0);
-  //     cubeRef.current.rotation.set(
-  //       0,
-  //       0,
-  //       cubeRef.current.rotation.z + delta * 0.1
-  //     ); // I should use delta to solve jump???!!
-  //     // console.log(orbitRef.current);
-  //   }
-  //   // console.log(orbitRef.current);
-  // });
 
   const eventHandler = () => {
     console.log(orbitRef.current.getDistance());
@@ -121,7 +81,7 @@ const ThreeGem = () => {
     color: "red",
     fastChroma: true,
   };
-  const texture = useLoader(RGBELoader, "././studio_small_08_4k.hdr");
+  const texture = useLoader(RGBELoader, "././studio_small_08_1k.hdr");
 
   return (
     <>
