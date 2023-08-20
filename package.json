@@ -12,18 +12,16 @@
   "dependencies": {
     "@react-three/drei": "^9.77.10",
     "@react-three/fiber": "^8.13.4",
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/three": "^0.152.1",
     "framer-motion": "^10.12.18",
-    "leva": "^0.9.35",
     "popmotion": "^11.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
+    "react-redux": "^8.1.2",
     "react-router-dom": "^6.14.1",
-    "three": "^0.154.0",
-    "three-mesh-bvh": "^0.5.15",
-    "vite-plugin-glsl": "^1.1.2",
-    "zustand": "^4.3.9"
+    "three": "^0.154.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",

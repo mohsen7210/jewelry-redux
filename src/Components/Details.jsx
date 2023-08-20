@@ -1,4 +1,10 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import {
+  changeGemColor,
+  changeRingColor,
+  changeRing,
+} from "../reduxStore/ringSlice";
 
 import silver from "../assets/silver.webp";
 import gold from "../assets/gold.webp";
@@ -14,32 +20,29 @@ import ringImg1 from "../assets/ring02.webp";
 import ringImg2 from "../assets/ring03.webp";
 import ringImg3 from "../assets/ring04.webp";
 
-import useStore from "../stores/useStore";
-
 const Details = ({ active }) => {
-  const changeRingColor = useStore((state) => state.changeRingColor);
-  const changeGemColor = useStore((state) => state.changeGemColor);
-  const changeActiveRing = useStore((state) => state.changeActiveRing);
+  const dispatch = useDispatch();
+
   if (active === "gem") {
     return (
       <ul>
         <li>
-          <button onClick={() => changeGemColor(0xffffff)}>
+          <button onClick={() => dispatch(changeGemColor(0xffffff))}>
             <img className="details__image" src={white_gem} />
           </button>
         </li>
         <li>
-          <button onClick={() => changeGemColor(0xf97575)}>
+          <button onClick={() => dispatch(changeGemColor(0xf97575))}>
             <img className="details__image" src={red_gem} />
           </button>
         </li>
         <li>
-          <button onClick={() => changeGemColor(0x89aff9)}>
+          <button onClick={() => dispatch(changeGemColor(0x89aff9))}>
             <img className="details__image" src={blue_gem} />
           </button>
         </li>
         <li>
-          <button onClick={() => changeGemColor(0x94ffa8)}>
+          <button onClick={() => dispatch(changeGemColor(0x94ffa8))}>
             <img className="details__image" src={green_gem} />
           </button>
         </li>
@@ -49,22 +52,24 @@ const Details = ({ active }) => {
     return (
       <ul>
         <li>
-          <button onClick={() => changeRingColor(1, 0.843, 0.333)}>
+          <button onClick={() => dispatch(changeRingColor([1, 0.843, 0.333]))}>
             <img className="details__image" src={gold} />
           </button>
         </li>
         <li>
-          <button onClick={() => changeRingColor(1, 1, 1)}>
+          <button onClick={() => dispatch(changeRingColor([1, 1, 1]))}>
             <img className="details__image" src={silver} />
           </button>
         </li>
         <li>
-          <button onClick={() => changeRingColor(1, 0.6117, 0.839)}>
+          <button onClick={() => dispatch(changeRingColor([1, 0.6117, 0.839]))}>
             <img className="details__image" src={ros_gold} />
           </button>
         </li>
         <li>
-          <button onClick={() => changeRingColor(0.717, 0.43137, 0.474)}>
+          <button
+            onClick={() => dispatch(changeRingColor([0.717, 0.43137, 0.474]))}
+          >
             <img className="details__image" src={ros_gold2} />
           </button>
         </li>
@@ -75,7 +80,7 @@ const Details = ({ active }) => {
       <ul>
         <li>
           <button
-            onClick={() => changeActiveRing("ring1")}
+            onClick={() => dispatch(changeRing("ring1"))}
             className="details__btns"
           >
             <img className="details__image" src={ringImg2} />
@@ -83,7 +88,7 @@ const Details = ({ active }) => {
         </li>
         <li>
           <button
-            onClick={() => changeActiveRing("ring2")}
+            onClick={() => dispatch(changeRing("ring2"))}
             className="details__btns"
           >
             <img className="details__image" src={ringImg1} />
@@ -91,7 +96,7 @@ const Details = ({ active }) => {
         </li>
         <li>
           <button
-            onClick={() => changeActiveRing("ring3")}
+            onClick={() => dispatch(changeRing("ring3"))}
             className="details__btns"
           >
             <img className="details__image" src={ringImg3} />

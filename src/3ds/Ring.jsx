@@ -1,24 +1,23 @@
-import React, { useRef, useState, useEffect, Suspense } from "react";
+import React, { useRef, useState, Suspense } from "react";
 
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import {
   Environment,
   useGLTF,
   MeshRefractionMaterial,
-  CubeCamera,
 } from "@react-three/drei";
-import { color, useScroll, useTime, useTransform } from "framer-motion";
+import { useScroll, useTransform } from "framer-motion";
 
 import { RGBELoader } from "three-stdlib";
 import * as THREE from "three";
 
-import useStore from "../stores/useStore";
+// redux
+import { useSelector } from "react-redux";
 
 import PlaceHolder from "./PlaceHolder";
 
 const Model = () => {
   const { scrollYProgress } = useScroll();
-  const [disArray, setDisArray] = useState(useStore((state) => state.distance));
   const positionRef = useRef();
   const meshRef = useRef();
   const [initialPosition] = useState(() => new THREE.Vector3(0, 0, 0));
@@ -26,19 +25,10 @@ const Model = () => {
   const ringModel = useGLTF("./Ring01.glb");
   console.log(ringModel);
 
-  useEffect(() => {
-    const unsubscribeDistance = useStore.subscribe(
-      (state) => state.distance,
-      (value) => setDisArray(value)
-    );
+  const ringData = useSelector((state) => state.ring);
 
-    return () => {
-      unsubscribeDistance();
-    };
-  }, []);
-
-  const distance = useTransform(scrollYProgress, [0, 1], [7, 6]); // 950> ==> 5,4
-  const distance2 = useTransform(scrollYProgress, [0, 1], disArray);
+  const radiuse = useTransform(scrollYProgress, [0, 1], [7, 6]); // 950> ==> 5,4
+  const distance = useTransform(scrollYProgress, [0, 1], ringData.distance);
 
   const xpos = useTransform(
     scrollYProgress,
@@ -47,9 +37,8 @@ const Model = () => {
   );
 
   useFrame(({ camera }, delta) => {
-    initialPosition.set(distance2.get(), 0, 0);
-    camera.position.setFromSphericalCoords(distance.get(), 0, 0);
-    // initialPosition.lerp(finalPosition, 5 * delta);
+    initialPosition.set(distance.get(), 0, 0);
+    camera.position.setFromSphericalCoords(radiuse.get(), 0, 0);
     positionRef.current.position.copy(initialPosition);
     positionRef.current.rotation.set(
       positionRef.current.rotation.x,
@@ -74,12 +63,6 @@ const Model = () => {
   return (
     <>
       <Environment preset="warehouse" />
-
-      {/* <directionalLight
-        castShadow
-        position={[2, 2, 2]}
-        shadow-normalBias={0.04}
-      /> */}
 
       <group ref={positionRef} position={[0, 0, 0]}>
         <mesh

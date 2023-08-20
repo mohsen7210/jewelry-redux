@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import * as THREE from "three";
 
 import { useFrame, useLoader } from "@react-three/fiber";
@@ -10,62 +10,38 @@ import {
 } from "@react-three/drei";
 
 import { RGBELoader } from "three-stdlib";
-import useStore from "../stores/useStore";
+
+// redux
+import { useSelector } from "react-redux";
 
 const ThreeGem = () => {
-  // const { scrollYProgress } = useScroll();
   const [smoothedPos] = useState(() => new THREE.Vector3(10, 10, 10));
   const cubeRef = useRef();
   const orbitRef = useRef();
   const ringColorRef = useRef();
 
-  // const posx = useMotionValue(0);
-
-  // change initial value for ring and gem callers like rotate!!!
-  const camPos = useStore((state) => state.cameraPosition);
-  const [ringColor, setRingColor] = useState(() => new THREE.Color());
-  const [gemColor, setGemColor] = useState(() => new THREE.Color());
-  const [rotate, setRotate] = useState(useStore((state) => state.rotate));
-
-  useEffect(() => {
-    const unsubscribeRing = useStore.subscribe(
-      (state) => state.ringColor,
-      (color) => {
-        setRingColor(color);
-      }
-    );
-
-    const unsubscribeGem = useStore.subscribe(
-      (state) => state.gemColor,
-      (color) => {
-        setGemColor(color);
-      }
-    );
-
-    const unsubscribeRotate = useStore.subscribe(
-      (state) => state.rotate,
-      (value) => setRotate(value)
-    );
-
-    return () => {
-      unsubscribeRing();
-      unsubscribeGem();
-      unsubscribeRotate();
-    };
-  }, []);
+  // redux
+  const ringData = useSelector((state) => state.ring);
+  const { rotate } = useSelector((state) => state.camera);
+  const cameraPos = new THREE.Vector3(...ringData.cameraPosition);
+  const ringColor2 = new THREE.Color(...ringData.ringColor);
+  const gemColor2 = new THREE.Color(ringData.gemColor);
 
   useFrame((state, delta) => {
-    ringColorRef.current.color.lerp(ringColor, 2 * delta);
+    ringColorRef.current.color.lerp(ringColor2, 5 * delta);
 
     if (rotate) {
-      camPos.copy(state.camera.position);
+      cameraPos.copy(state.camera.position);
       smoothedPos.copy(state.camera.position);
+      // state.camera.position.copy(smoothedPos);
       state.camera.lookAt(0, 0, 0);
     } else {
-      smoothedPos.lerp(camPos, 5 * delta);
+      smoothedPos.lerp(cameraPos, 5 * delta);
       state.camera.position.copy(smoothedPos);
       state.camera.lookAt(0, 0, 0);
     }
+
+    // camPos.copy(orbitRef.current.object.position);
   });
 
   const eventHandler = () => {
@@ -112,7 +88,7 @@ const ThreeGem = () => {
           <MeshRefractionMaterial
             envMap={texture}
             {...config}
-            color={gemColor}
+            color={ringData.gemColor}
           />
         </mesh>
 
@@ -126,7 +102,7 @@ const ThreeGem = () => {
           <MeshRefractionMaterial
             envMap={texture}
             {...config}
-            color={gemColor}
+            color={gemColor2}
           />
         </mesh>
       </group>

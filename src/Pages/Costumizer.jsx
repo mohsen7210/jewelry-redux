@@ -1,25 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./styles/costumizer.css";
 import { PiCircleNotch, PiDownloadSimpleBold } from "react-icons/pi";
 import { BsGem } from "react-icons/bs";
 import { GiDiamondRing } from "react-icons/gi";
 import Details from "../Components/Details";
-import useStore from "../stores/useStore";
 import { Link } from "react-router-dom";
 import Loading from "../Components/Loading";
+import * as THREE from "three";
+
+// redux
+import { useDispatch } from "react-redux";
+import { moveCamera } from "../reduxStore/ringSlice";
+import { handleRotation } from "../reduxStore/cameraSlice";
 
 const Costumizer = ({ href }) => {
-  const handleRotation = useStore((state) => state.handleRotation);
   const [active, setActive] = useState("");
 
-  const setCamPos = useStore((state) => state.moveCamera);
-  const [isLoading, setIsLoading] = useState(
-    useStore((state) => state.loading)
-  );
+  // redux
+  const dispatch = useDispatch();
 
   const handleOptions = (name, r, phi, teta) => {
     setActive(name);
-    setCamPos(r, phi, teta);
+    const newPosition = new THREE.Vector3();
+    newPosition.setFromSphericalCoords(r, phi, teta);
+
+    dispatch(moveCamera([newPosition.x, newPosition.y, newPosition.z]));
   };
 
   const handleScreenShot = () => {
@@ -28,17 +33,6 @@ const Costumizer = ({ href }) => {
     link.setAttribute("href", href());
     link.click();
   };
-
-  useEffect(() => {
-    const unsubscribe = useStore.subscribe(
-      (state) => state.loading,
-      (vlaue) => setIsLoading(vlaue)
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
 
   return (
     <>
@@ -52,26 +46,26 @@ const Costumizer = ({ href }) => {
         <div className="costumizer__options">
           <div className="costumizer__menu">
             <button
-              onPointerEnter={() => handleRotation(false)}
-              onPointerLeave={() => handleRotation(true)}
-              onPointerDown={handleRotation(false)}
+              onPointerEnter={() => dispatch(handleRotation(true))}
+              onPointerLeave={() => dispatch(handleRotation(true))}
+              onPointerDown={() => dispatch(handleRotation(false))}
               onClick={() => handleOptions("body", 3, Math.PI / 3, 1.7)}
             >
               <PiCircleNotch color="white" />
             </button>
             <button
-              onPointerEnter={() => handleRotation(false)}
-              onPointerLeave={() => handleRotation(true)}
-              onPointerDown={handleRotation(false)}
+              onPointerEnter={() => dispatch(handleRotation(true))}
+              onPointerLeave={() => dispatch(handleRotation(true))}
+              onPointerDown={() => dispatch(handleRotation(false))}
               onClick={() => handleOptions("gem", 3, 0.3, 0.5)}
             >
               <BsGem color="white" />
             </button>
             <button
-              onPointerEnter={() => handleRotation(false)}
-              onPointerLeave={() => handleRotation(true)}
+              onPointerEnter={() => dispatch(handleRotation(true))}
+              onPointerLeave={() => dispatch(handleRotation(true))}
+              onPointerDown={() => dispatch(handleRotation(false))}
               onClick={() => handleOptions("rings", 4, 2, 2)}
-              onPointerDown={handleRotation(false)}
             >
               <GiDiamondRing color="white" />
             </button>

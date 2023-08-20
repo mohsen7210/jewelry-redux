@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from "react";
-import useStore from "../stores/useStore";
 import logo from "../assets/logo.webm";
 
+// redux
+import { useSelector } from "react-redux";
+
 const Loading = () => {
-  const [isLoading, setIsLoading] = useState(
-    useStore((state) => state.loading)
-  );
+  const ringData = useSelector((state) => state.ring);
+  // const [isLoading, setIsLoading] = useState(
+  //   useStore((state) => state.loading)
+  // );
 
-  useEffect(() => {
-    const unsubscribe = useStore.subscribe(
-      (state) => state.loading,
-      (vlaue) => setIsLoading(vlaue)
-    );
+  // useEffect(() => {
+  //   const unsubscribe = useStore.subscribe(
+  //     (state) => state.loading,
+  //     (vlaue) => setIsLoading(vlaue)
+  //   );
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
+
   return (
     <>
-      <div className={isLoading ? "loading" : "loading__hide"}>
+      <div className={ringData.loading ? "loading" : "loading__hide"}>
         <video
           className="service__video"
           playsinline

@@ -11,7 +11,7 @@ import {
 } from "@react-three/drei";
 
 import { RGBELoader } from "three-stdlib";
-import useStore from "../stores/useStore";
+import { useSelector } from "react-redux";
 
 export const OpenRing = () => {
   const ringModel = useGLTF("./ring003.glb");
@@ -32,54 +32,30 @@ export const OpenRing = () => {
   const ringColorRef = useRef();
   const rgbeTexture = useEnvironment({ files: "studio_small_08_1k.hdr" });
 
-  const camPos = useStore((state) => state.cameraPosition);
-  const [ringColor, setRingColor] = useState(() => new THREE.Color());
-  const [gemColor, setGemColor] = useState(() => new THREE.Color());
-  const [rotate, setRotate] = useState(useStore((state) => state.rotate));
-
-  useEffect(() => {
-    const unsubscribeRing = useStore.subscribe(
-      (state) => state.ringColor,
-      (color) => {
-        setRingColor(color);
-      }
-    );
-
-    const unsubscribeGem = useStore.subscribe(
-      (state) => state.gemColor,
-      (color) => {
-        setGemColor(color);
-      }
-    );
-
-    const unsubscribeRotate = useStore.subscribe(
-      (state) => state.rotate,
-      (value) => setRotate(value)
-    );
-
-    return () => {
-      unsubscribeRing();
-      unsubscribeGem();
-      unsubscribeRotate();
-    };
-  }, []);
+  // redux
+  const ringData = useSelector((state) => state.ring);
+  const { rotate } = useSelector((state) => state.camera);
+  const cameraPos = new THREE.Vector3(...ringData.cameraPosition);
+  const ringColor2 = new THREE.Color(...ringData.ringColor);
+  const gemColor2 = new THREE.Color(ringData.gemColor);
 
   useFrame((state, delta) => {
-    ringColorRef.current.color.lerp(ringColor, 5 * delta);
+    ringColorRef.current.color.lerp(ringColor2, 5 * delta);
 
     if (rotate) {
-      camPos.copy(state.camera.position);
+      cameraPos.copy(state.camera.position);
       smoothedPos.copy(state.camera.position);
       // state.camera.position.copy(smoothedPos);
       state.camera.lookAt(0, 0, 0);
     } else {
-      smoothedPos.lerp(camPos, 5 * delta);
+      smoothedPos.lerp(cameraPos, 5 * delta);
       state.camera.position.copy(smoothedPos);
       state.camera.lookAt(0, 0, 0);
     }
 
     // camPos.copy(orbitRef.current.object.position);
   });
+  // redux end
 
   console.log(ringModel);
   return (
@@ -97,9 +73,6 @@ export const OpenRing = () => {
             ref={ringColorRef}
             roughness={0.15}
             metalness={1}
-            // envMap={rgbeTexture}
-            // envMapIntensity={0.8}
-            // ref={ringColorRef}
           />
         </mesh>
 
@@ -113,7 +86,7 @@ export const OpenRing = () => {
           <MeshRefractionMaterial
             envMap={rgbeTexture}
             {...config}
-            color={gemColor}
+            color={gemColor2}
           />
         </mesh>
 

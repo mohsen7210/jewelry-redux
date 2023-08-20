@@ -5,38 +5,20 @@ import { OpenRing } from "./OpenRing";
 import * as THREE from "three";
 import "../Pages/styles/costumizer.css";
 
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { handleRotation } from "../reduxStore/cameraSlice";
+
 import { Canvas } from "@react-three/fiber";
-import useStore from "../stores/useStore";
 import PlaceHolder from "./PlaceHolder";
 import BigRing from "./BigRing";
 
 const CostumRing = () => {
-  const [action, setAction] = useState("ring1");
   const canvasRef = useRef();
+  const { ringName } = useSelector((state) => state.ring);
 
-  const handleRotation = useStore((state) => state.handleRotation);
-
-  useEffect(() => {
-    const unsubscribeActiveRing = useStore.subscribe(
-      (state) => state.activeRing,
-      (activeRing) => {
-        setAction(activeRing);
-        console.log(activeRing, "fn");
-      }
-    );
-
-    const unsubRot = useStore.subscribe(
-      (state) => state.rotate,
-      (value) => {
-        console.log(value, "5555");
-      }
-    );
-
-    return () => {
-      unsubscribeActiveRing();
-      unsubRot();
-    };
-  }, []);
+  // redux
+  const dispatch = useDispatch();
 
   const generateImg = () => {
     return canvasRef.current
@@ -51,10 +33,10 @@ const CostumRing = () => {
         <Canvas
           ref={canvasRef}
           onPointerDownCapture={() => {
-            handleRotation(true);
+            dispatch(handleRotation(true));
           }}
           onPointerDown={() => {
-            handleRotation(true);
+            dispatch(handleRotation(true));
           }}
           camera={{
             fov: 45,
@@ -65,9 +47,9 @@ const CostumRing = () => {
           }}
         >
           <Suspense fallback={<PlaceHolder />}>
-            {action == "ring1" ? (
+            {ringName == "ring1" ? (
               <ThreeGem />
-            ) : action == "ring2" ? (
+            ) : ringName == "ring2" ? (
               <OpenRing />
             ) : (
               <BigRing />
